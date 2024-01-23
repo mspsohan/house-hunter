@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { GiSpinningSword } from "react-icons/gi";
+import { useNavigate, useParams } from "react-router-dom";
+import useOwnerHouse from "../../../hooks/useOwnerHouse";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const AddHouse = () => {
+const UpdateHouse = () => {
    const [houseName, setHouseName] = useState("")
    const [address, setAddress] = useState("")
    const [city, setCity] = useState("")
@@ -19,7 +21,28 @@ const AddHouse = () => {
    const [picLoading, setPicLoading] = useState(false)
    const [loading, setLoading] = useState(false)
    const { user } = useAuth()
-   const axiosPublic = useAxiosPublic()
+   const axiosSecure = useAxiosSecure()
+   const navigate = useNavigate()
+
+   const { id } = useParams();
+   const { data, isLoading } = useOwnerHouse();
+   const singleHouse = data?.find(house => house?._id === id)
+
+   useEffect(() => {
+      if (!isLoading && singleHouse) {
+         setHouseName(singleHouse?.houseName || '');
+         setAddress(singleHouse?.address || '');
+         setCity(singleHouse?.city || '');
+         setBedroom(singleHouse?.bedroom || '');
+         setBathroom(singleHouse?.bathroom || '');
+         setRoomSize(singleHouse?.roomSize || '');
+         setAvailability(singleHouse?.availability || '');
+         setRent(singleHouse?.rent || '');
+         setNumber(singleHouse?.number || '');
+         setDescription(singleHouse?.description || '');
+         setPicture(singleHouse?.picture || "")
+      }
+   }, [isLoading, singleHouse]);
 
    const postImage = (pics) => {
       setPicLoading(true)
@@ -27,6 +50,7 @@ const AddHouse = () => {
          toast.error("Please Select an Image")
          return
       }
+      setPicLoading(false)
 
       if (pics.type === "image/jpeg" || pics.type === "image/png") {
          const data = new FormData()
@@ -54,10 +78,11 @@ const AddHouse = () => {
 
    const handleAddHouse = async () => {
       setLoading(true)
+      console.log(houseName, address, city, bedroom, bathroom, roomSize, availability, rent, number, description, picture)
 
       const bdMobileNumberRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
 
-      if (!houseName || !address || !city || !bedroom || !bathroom || !roomSize || !availability || !rent || !number || !description || !picture) {
+      if (!houseName || !address || !city || !bedroom || !bathroom || !roomSize || !availability || !rent || !number || !description) {
          toast.error("Please Fill all the Fields")
          setLoading(false)
          return
@@ -91,10 +116,12 @@ const AddHouse = () => {
                "Content-type": "application/json",
             },
          };
-         await axiosPublic.post("/api/house", houseData, config);
-         toast.success("House Added Successful");
+         await axiosSecure.put(`/api/house/${id}`, houseData, config);
+         toast.success("House Updated Successful");
          setLoading(false);
+         navigate('/dashboard')
       } catch (error) {
+         console.log(error)
          toast.error(error.response.data.message);
          setLoading(false);
       }
@@ -104,48 +131,52 @@ const AddHouse = () => {
       return <div>Loading......</div>
    }
 
+   if (isLoading) {
+      return <div>Loading......</div>;
+   }
+
    return (
       <>
          <div className="max-w-screen-md mx-auto">
-            <div className="bg-yellow-400 py-2 rounded-md">
-               <h2 className="text-3xl font-bold text-blue-800 text-center">Add Your House</h2>
+            <div className="bg-blue-800  py-2 rounded-md">
+               <h2 className="text-3xl font-bold text-yellow-400 text-center">Update Your House</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 border border-gray-400 rounded-md p-3">
                <div>
                   <label htmlFor="">House Name</label>
-                  <input onChange={(e) => setHouseName(e.target.value)} type="text" name="" id="" placeholder="House Name" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setHouseName(e.target.value)} defaultValue={houseName} type="text" name="" id="" placeholder="House Name" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">House Address</label>
-                  <input onChange={(e) => setAddress(e.target.value)} type="text" name="" id="" placeholder="House Address" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setAddress(e.target.value)} defaultValue={address} type="text" name="" id="" placeholder="House Address" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">City</label>
-                  <input onChange={(e) => setCity(e.target.value)} type="text" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setCity(e.target.value)} defaultValue={city} type="text" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Bedrooms</label>
-                  <input onChange={(e) => setBedroom(e.target.value)} type="number" name="" id="" placeholder="Bedrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setBedroom(e.target.value)} defaultValue={bedroom} type="number" name="" id="" placeholder="Bedrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Bathrooms</label>
-                  <input onChange={(e) => setBathroom(e.target.value)} type="number" name="" id="" placeholder="Bathrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setBathroom(e.target.value)} defaultValue={bathroom} type="number" name="" id="" placeholder="Bathrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Room Size (Squire Feet)</label>
-                  <input onChange={(e) => setRoomSize(e.target.value)} type="number" name="" id="" placeholder="Room Size" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setRoomSize(e.target.value)} defaultValue={roomSize} type="number" name="" id="" placeholder="Room Size" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Avaiabillity Date</label>
-                  <input onChange={(e) => setAvailability(e.target.value)} type="date" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setAvailability(e.target.value)} defaultValue={availability} type="date" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Rent Per Month</label>
-                  <input onChange={(e) => setRent(e.target.value)} type="number" name="" id="" placeholder="Rent Per Month" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setRent(e.target.value)} defaultValue={rent} type="number" name="" id="" placeholder="Rent Per Month" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Phone Number (give valid bd Number)</label>
-                  <input onChange={(e) => setNumber(e.target.value)} defaultValue={+880178961606} type="number" name="" id="" placeholder="Phone Number" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <input onChange={(e) => setNumber(e.target.value)} defaultValue={number} type="number" name="" id="" placeholder="Phone Number" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
                <div>
                   <label htmlFor="">Picture</label>
@@ -153,11 +184,11 @@ const AddHouse = () => {
                </div>
                <div className="col-span-2">
                   <label htmlFor="">Description</label>
-                  <textarea onChange={(e) => setDescription(e.target.value)} type="text" name="" id="" placeholder="Description" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
+                  <textarea onChange={(e) => setDescription(e.target.value)} defaultValue={description} type="text" name="" id="" placeholder="Description" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div className="col-span-2 bg-yellow-200 hover:bg-yellow-400">
+               <div className="col-span-2 bg-blue-200 hover:bg-blue-400">
                   <button onClick={handleAddHouse} type="text" name="" id="" placeholder="Description" className="w-full p-2 font-semibold border rounded-md border-gray-400 outline-none text-2xl">
-                     {picLoading ? <GiSpinningSword className="animate-spin mx-auto" /> : "Submit"}
+                     {picLoading ? <GiSpinningSword className="animate-spin mx-auto" /> : "Update"}
                   </button>
                </div>
             </div>
@@ -166,4 +197,4 @@ const AddHouse = () => {
    );
 };
 
-export default AddHouse;
+export default UpdateHouse;

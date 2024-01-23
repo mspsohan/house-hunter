@@ -22,6 +22,14 @@ const Registration = () => {
          setLoading(false);
          return;
       }
+
+      const bdMobileNumberRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
+      if (!bdMobileNumberRegex.test(number)) {
+         toast.error("Please enter a valid Bangladeshi mobile number");
+         setLoading(false);
+         return;
+      }
+
       try {
          const config = {
             headers: {
@@ -32,7 +40,7 @@ const Registration = () => {
          localStorage.setItem("userInfo", JSON.stringify(data));
          setLoading(false);
          toast.success("Registration Successful")
-         navigate("/");
+         navigate("/dashboard");
       } catch (error) {
          toast.error(error?.response?.data?.message)
          setLoading(false);
@@ -52,7 +60,7 @@ const Registration = () => {
             <div>
                <label htmlFor="">Select Role</label>
                <select value={role} onChange={(e) => setRole(e.target.value)} name="" id="" className="w-full outline-none border-gray-300 border-2 p-2">
-                  <option disabled>Select One</option>
+                  <option selected value="">Select One</option>
                   <option value="owner">House Owner</option>
                   <option value="renter">House Renter</option>
                </select>

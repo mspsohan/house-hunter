@@ -9,6 +9,7 @@ const connectDB = require('./src/config/db');
 const { notFound, errorHandler } = require('./src/middleware/errorMiddleware');
 const userRoutes = require("./src/routes/userRoutes");
 const houseRoutes = require("./src/routes/houseRoutes");
+const bookingRoutes = require("./src/routes/bookingRoutes");
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/house', houseRoutes);
+app.use('/api/booking', bookingRoutes);
 
 // Error Handling middlewares
 app.use(notFound);

@@ -28,7 +28,7 @@ const Login = () => {
          localStorage.setItem("userInfo", JSON.stringify(data))
          setLoading(false)
          toast.success("Login Successful")
-         navigate("/")
+         navigate("/dashboard")
       } catch (error) {
          setLoading(false)
          toast.error("Error Occured!", error.response.data.message)

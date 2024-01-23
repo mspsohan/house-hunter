@@ -42,7 +42,7 @@ const DashboardLayout = () => {
 
    return (
       <>
-         <div className='bg-[#f1f5fb] xl:h-screen dark:bg-gray-800'>
+         <div className='bg-white xl:h-screen dark:bg-gray-800'>
             <div className={`body-content ${open ? 'open' : ''}`}>
                <div className={`relative lg:block navbar-menu ${open ? 'w-0' : 'w-[280px]'}`}>
                   <div
@@ -64,7 +64,7 @@ const DashboardLayout = () => {
                                  <span className='inline-block mr-3'>
                                     <GrDashboard className='w-5 h-5 dark:group-hover:text-gray-400' />
                                  </span>
-                                 <span>Home</span>
+                                 <span>Dashboard Home</span>
                               </Link>
                            </li>
                            <li>
@@ -73,7 +73,7 @@ const DashboardLayout = () => {
                                  <span className='inline-block mr-3'>
                                     <FaListUl className='w-5 h-5 dark:group-hover:text-gray-400' />
                                  </span>
-                                 <span> Add House </span>
+                                 <span> Add New House </span>
                               </Link>
                            </li>
                         </ul>

@@ -66,7 +66,7 @@ const Navbar = () => {
                         </li>
                      </ul> */}
 
-                     <div className="items-center hidden max-w-xs py-2 pl-4 bg-white rounded-lg dark:text-gray-300 dark:bg-gray-600 lg:flex">
+                     {/* <div className="items-center hidden max-w-xs py-2 pl-4 bg-white rounded-lg dark:text-gray-300 dark:bg-gray-600 lg:flex">
                         <FaSearch className="text-4xl text-gray-500 mr-3" />
                         <input type="text" className="w-full outline-gray-500 py-2 pl-3 border-0 dark:text-gray-300 dark:bg-gray-600"
                            placeholder="Search..." />
@@ -78,7 +78,7 @@ const Navbar = () => {
                               <option value="">Option 2</option>
                            </select>
                         </div>
-                     </div>
+                     </div> */}
                      <div className="items-center justify-end hidden lg:flex dark:text-gray-400">
                         <a href="" className="flex items-center dark:text-gray-400 hover:bg-gray-400 p-3 rounded-full">
                            <FaShoppingCart className="text-2xl text-gray-700" />

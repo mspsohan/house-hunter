@@ -6,7 +6,7 @@ const useOwnerHouse = () => {
    const { user } = useAuth()
    const axiosSecure = useAxiosSecure()
    const { data, isLoading, refetch } = useQuery({
-      queryKey: ["OwnerHouse"],
+      queryKey: ["OwnerHouse", user?.email],
       queryFn: async () => {
          const { data } = await axiosSecure.get(`/api/house?email=${user?.email}`)
          return data

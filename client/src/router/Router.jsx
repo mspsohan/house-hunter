@@ -5,6 +5,7 @@ import Authentication from "../pages/Authentication/Authentication";
 import DashboardLayout from "../layouts/DashboardLayout";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import AddHouse from "../pages/Dashboard/AddHouse/AddHouse";
+import UpdateHouse from "../pages/Dashboard/UpdateHouse/UpdateHouse";
 
 const router = createBrowserRouter([
    {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
          {
             path: "/dashboard/addhouse",
             element: <AddHouse />
+         },
+         {
+            path: "/dashboard/updatehouse/:id",
+            element: <UpdateHouse />
          }
       ]
    }

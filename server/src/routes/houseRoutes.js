@@ -1,10 +1,15 @@
 const express = require('express');
-const { getHomes, addHouse } = require('../controllers/houseController');
+const { getHomes, getAllHouse, addHouse, deleteHouse, updateHouse } = require('../controllers/houseController');
 const { protect } = require('../middleware/authMiddleware');
 
-const router = express.Router()
+const router = express.Router();
 
-router.route("/").post(addHouse).get(protect, getHomes)
-// router.post("/", addHouse)
+router.route('/').post(addHouse).get(protect, getHomes);
 
-module.exports = router
+router.get("/all", getAllHouse)
+
+router.delete('/:id', protect, deleteHouse);
+
+router.put('/:id', protect, updateHouse);
+
+module.exports = router;
