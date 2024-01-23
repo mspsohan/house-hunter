@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/HomePage/Home";
 import Authentication from "../pages/Authentication/Authentication";
+import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import AddHouse from "../pages/Dashboard/AddHouse/AddHouse";
 
 const router = createBrowserRouter([
    {
@@ -10,12 +13,26 @@ const router = createBrowserRouter([
       errorElement: <div>Errroorr........</div>,
       children: [
          {
-            path: "/",
+            index: true,
             element: <Home />
          },
+      ]
+   },
+   {
+      path: "/login",
+      element: <Authentication />
+   },
+   {
+      path: "/dashboard",
+      element: <DashboardLayout />,
+      children: [
          {
-            path: "/login",
-            element: <Authentication />
+            index: true,
+            element: <DashboardHome />
+         },
+         {
+            path: "/dashboard/addhouse",
+            element: <AddHouse />
          }
       ]
    }

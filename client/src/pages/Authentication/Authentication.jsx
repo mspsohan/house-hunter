@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "../../components/Authentications/Login";
 import Registration from "../../components/Authentications/Registration";
+import { useNavigate } from "react-router-dom";
 
 const Authentication = () => {
    const [openTab, setOpenTab] = useState(1);
+
+   const navigate = useNavigate()
+   useEffect(() => {
+      const user = JSON.parse(localStorage.getItem("userInfo"))
+      if (user) {
+         navigate("/")
+      }
+   }, [])
 
    return (
       <div>
@@ -12,7 +21,7 @@ const Authentication = () => {
                <div className="bg-yellow-400 w-full text-center py-2 mb-5">
                   <h2 className="text-2xl lg:text-4xl font-semibold">House Hunter</h2>
                </div>
-               <ul className="flex justify-center w-full items-center space-x-2">
+               <ul className="flex justify-center w-full items-center space-x-2 px-3">
                   <li className="w-full">
                      <button
                         onClick={() => setOpenTab(1)}
@@ -30,7 +39,7 @@ const Authentication = () => {
                      </button>
                   </li>
                </ul>
-               <div className="p-3 mt-6 bg-white border w-full">
+               <div className="p-3 mt-6 bg-white border w-full rounded-md">
                   <div className={openTab === 1 ? "block" : "hidden"}>
                      <Login />
                   </div>

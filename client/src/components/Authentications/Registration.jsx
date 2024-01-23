@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Registration = () => {
    const [show, setShow] = useState()
@@ -12,45 +12,31 @@ const Registration = () => {
    const [password, setPassword] = useState("");
    const [loading, setLoading] = useState()
    const navigate = useNavigate();
+   const axiosPublic = useAxiosPublic()
 
+   const submitHandler = async () => {
 
-   const submitHandler = () => {
-
-      // setLoading(true);
+      setLoading(true);
       if (!name || !role || !number || !email || !password) {
          toast.error("Please Fill all the Feilds");
          setLoading(false);
          return;
       }
-      console.log(name, role, number, email, password)
-      // try {
-      //    const config = {
-      //       headers: {
-      //          "Content-type": "application/json",
-      //       },
-      //    };
-      //    const { data } = await axios.post("/api/user", { name, role, number, email, password }, config);
-      //    // toast({
-      //    //    title: "Registration Successful",
-      //    //    status: "success",
-      //    //    duration: 5000,
-      //    //    isClosable: true,
-      //    //    position: "bottom",
-      //    // });
-      //    localStorage.setItem("userInfo", JSON.stringify(data));
-      //    setLoading(false);
-      //    navigate("/chats");
-      // } catch (error) {
-      //    // toast({
-      //    //    title: "Error Occured!",
-      //    //    description: error.response.data.message,
-      //    //    status: "error",
-      //    //    duration: 5000,
-      //    //    isClosable: true,
-      //    //    position: "bottom",
-      //    // });
-      //    setLoading(false);
-      // }
+      try {
+         const config = {
+            headers: {
+               "Content-type": "application/json",
+            },
+         };
+         const { data } = await axiosPublic.post("/api/user", { name, role, number, email, password }, config);
+         localStorage.setItem("userInfo", JSON.stringify(data));
+         setLoading(false);
+         toast.success("Registration Successful")
+         navigate("/");
+      } catch (error) {
+         toast.error(error?.response?.data?.message)
+         setLoading(false);
+      }
    };
 
    if (loading) {
@@ -67,8 +53,8 @@ const Registration = () => {
                <label htmlFor="">Select Role</label>
                <select value={role} onChange={(e) => setRole(e.target.value)} name="" id="" className="w-full outline-none border-gray-300 border-2 p-2">
                   <option disabled>Select One</option>
-                  <option value="House Owner">House Owner</option>
-                  <option value="House Renter">House Renter</option>
+                  <option value="owner">House Owner</option>
+                  <option value="renter">House Renter</option>
                </select>
             </div>
             <div>
@@ -86,7 +72,7 @@ const Registration = () => {
             </div>
             <div>
                <div>
-                  <button onClick={submitHandler} type="submit" className="text-center w-full bg-purple-500 py-2 rounded-sm text-white text-2xl font-semibold">Sign Up</button>
+                  <button onClick={submitHandler} type="submit" className="text-center w-full rounded-md bg-purple-500 py-2 text-white text-2xl font-semibold">Sign Up</button>
                </div>
             </div>
          </div>
