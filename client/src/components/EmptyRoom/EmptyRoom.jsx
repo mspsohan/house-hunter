@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const EmptyRoom = () => {
+
    return (
       <>
          <div className="min-h-[50vh] flex justify-center items-center flex-col">

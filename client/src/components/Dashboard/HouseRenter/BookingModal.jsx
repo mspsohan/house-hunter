@@ -32,7 +32,7 @@ const BookingModal = ({ open, handleClose, house }) => {
       setLoading(true);
       const bdMobileNumberRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
       if (!bdMobileNumberRegex.test(number)) {
-         toast.error("Please enter a valid Bangladeshi mobile number");
+         toast.error("Please enter a valid Bangladeshi mobile number With Country Code (+88)");
          setLoading(false);
          return;
       }

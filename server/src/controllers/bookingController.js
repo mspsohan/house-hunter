@@ -1,5 +1,5 @@
-// const mongoose = require('mongoose');
-// const ObjectId = mongoose.Types.ObjectId;
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const Booking = require("../models/bookingModel")
 
@@ -50,7 +50,24 @@ const saveBooking = async (req, res) => {
 
 
 const deleteBooking = async (req, res) => {
-   res.send('delete Booking')
-}
+   const bookingId = req.params.id;
+   console.log(bookingId)
+
+   try {
+      const query = { _id: new ObjectId(bookingId) }
+      const booking = await Booking.findById(query);
+
+      if (!booking) {
+         return res.status(404).json({ error: "Booking not found" });
+      }
+
+      await Booking.findByIdAndDelete(query);
+
+      res.status(200).json({ message: "Booking deleted successfully" });
+   } catch (error) {
+      console.error("Error deleting booking:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+   }
+};
 
 module.exports = { getBooking, saveBooking, deleteBooking }
