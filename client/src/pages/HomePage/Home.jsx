@@ -3,6 +3,10 @@ import { IoLocationOutline } from "react-icons/io5";
 import { BsCalendar2Day } from "react-icons/bs";
 import { useState } from "react";
 import { TablePagination } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
+import BookingModal from "../../components/Dashboard/HouseRenter/BookingModal";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
    const [page, setPage] = useState(0);
@@ -14,6 +18,7 @@ const Home = () => {
    const [roomSize, setRoomSize] = useState(100000)
    const [availability, setAvailability] = useState('')
    const [rangeValue, setRangeValue] = useState(100000);
+   const [open, setOpen] = useState(false);
 
    const { data: allHouses } = useAllHouse({ page, rowsPerPage, house, city, bedroom, bathroom, roomSize, availability, rangeValue });
 
@@ -21,13 +26,37 @@ const Home = () => {
    // ============================================
    // MIUI Pagination Handler
    const count = allHouses?.totalCount
+
    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
+      if (newPage >= 0 && newPage * rowsPerPage < count) {
+         setPage(newPage);
+      }
    };
+
    const handleChangeRowsPerPage = (event) => {
-      setRowsPerPage(parseInt(event.target.value));
+      const newRowsPerPage = parseInt(event.target.value, 10);
+      setRowsPerPage(newRowsPerPage);
       setPage(0);
    };
+   // =============================================
+   // Booking Handler
+   const { user } = useAuth()
+   const navigate = useNavigate()
+
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
+
+   const handleBookingClick = (housedata) => {
+      setHouse(housedata)
+      if (!user) {
+         return navigate('/login');
+      } else if (user?.role === 'owner') {
+         return toast.error('Owners cannot book houses.');
+      } else {
+         handleOpen()
+      }
+   };
+
    // =============================================
 
    return (
@@ -122,7 +151,7 @@ const Home = () => {
                                        <span className="text-sm text-gray-600 dark:text-gray-400">{house?.city}</span>
                                     </div>
                                     <h3 className="mb-4 h-16 text-lg font-medium text-gray-700 dark:text-gray-400">
-                                       {house?.description.slice(0, 80)} ... <span>{house?.rent}</span>
+                                       {house?.description.slice(0, 80)} ...
                                     </h3>
                                     <div className="flex items-center justify-between ">
                                        <div className="flex items-center">
@@ -131,9 +160,9 @@ const Home = () => {
                                           </p>
                                           <span className="text-sm font-medium text-gray-700 dark:text-gray-400">Availability: {house?.availability}</span>
                                        </div>
-                                       <a href="#"
-                                          className="px-3 py-2 text-xs text-gray-100 bg-blue-700 rounded hover:bg-blue-600 hover:text-gray-100">
-                                          Add Booking</a>
+                                       <button onClick={() => handleBookingClick(house)} className="px-3 py-2 text-xs text-gray-100 bg-blue-700 rounded hover:bg-blue-600 hover:text-gray-100">
+                                          Add Booking
+                                       </button>
                                     </div>
                                  </div>
                               </div>
@@ -147,7 +176,7 @@ const Home = () => {
                   <TablePagination
                      component="div"
                      count={count || 0}
-                     page={page || 0}
+                     page={!count || count <= 0 ? 0 : page}
                      onPageChange={handleChangePage}
                      rowsPerPage={rowsPerPage}
                      onRowsPerPageChange={handleChangeRowsPerPage}
@@ -156,6 +185,7 @@ const Home = () => {
                </div>
             </div>
          </div>
+         <BookingModal open={open} handleClose={handleClose} house={house} />
       </>
    );
 };

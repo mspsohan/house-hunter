@@ -67,15 +67,17 @@ const DashboardLayout = () => {
                                  <span>Dashboard Home</span>
                               </Link>
                            </li>
-                           <li>
-                              <Link to="/dashboard/addhouse"
-                                 className='flex items-center px-6 py-4 text-gray-300 dark:hover:bg-gray-800 dark:text-gray-400 group hover:text-white hover:bg-gray-900'>
-                                 <span className='inline-block mr-3'>
-                                    <FaListUl className='w-5 h-5 dark:group-hover:text-gray-400' />
-                                 </span>
-                                 <span> Add New House </span>
-                              </Link>
-                           </li>
+                           {
+                              user?.role === "owner" && <li>
+                                 <Link to="/dashboard/addhouse"
+                                    className='flex items-center px-6 py-4 text-gray-300 dark:hover:bg-gray-800 dark:text-gray-400 group hover:text-white hover:bg-gray-900'>
+                                    <span className='inline-block mr-3'>
+                                       <FaListUl className='w-5 h-5 dark:group-hover:text-gray-400' />
+                                    </span>
+                                    <span> Add New House </span>
+                                 </Link>
+                              </li>
+                           }
                         </ul>
                         <p className='px-6 py-3 text-lg text-gray-300 bg-gray-600'>Main</p>
                         <ul className='mb-8 text-sm'>

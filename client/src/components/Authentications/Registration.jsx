@@ -60,11 +60,12 @@ const Registration = () => {
             <div>
                <label htmlFor="">Select Role</label>
                <select value={role} onChange={(e) => setRole(e.target.value)} name="" id="" className="w-full outline-none border-gray-300 border-2 p-2">
-                  <option selected value="">Select One</option>
+                  <option value="" disabled>Select One</option>
                   <option value="owner">House Owner</option>
                   <option value="renter">House Renter</option>
                </select>
             </div>
+
             <div>
                <label htmlFor="">Phone Number</label>
                <input onChange={(e) => setNumber(e.target.value)} type="number" name="" id="" placeholder="Your Phone Number" className="w-full outline-none border-gray-300 border-2 p-2" />

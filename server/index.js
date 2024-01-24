@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 dotenv.config();
 app.use(cors({
-   origin: ["http://localhost:5173"],
+   origin: ["http://localhost:5173", "https://house-hunter-bd.netlify.app"],
    optionsSuccessStatus: 200,
 }));
 
