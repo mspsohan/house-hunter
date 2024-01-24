@@ -51,7 +51,7 @@ const Home = () => {
       if (!user) {
          return navigate('/login');
       } else if (user?.role === 'owner') {
-         return toast.error('Owners cannot book houses.');
+         return toast.error('Owners Cannot Book House.');
       } else {
          handleOpen()
       }
@@ -131,12 +131,12 @@ const Home = () => {
                                     <img src={house?.picture} alt=""
                                        className="object-cover w-full h-full " />
                                     {/* <span className="absolute top-0 left-0 px-2 py-1 mt-2 ml-2 text-xs text-white bg-blue-700">
-                                       Lifestyle</span> */}
+                                       Apertment</span> */}
                                  </div>
                                  <div className="p-4 bg-white dark:bg-gray-700">
                                     <div className="flex items-center justify-between mb-1">
                                        <div>
-                                          <a href="">
+                                          <a href="#">
                                              <h2 className="text-xl font-semibold dark:text-gray-300">{house?.houseName}</h2>
                                           </a>
                                        </div>

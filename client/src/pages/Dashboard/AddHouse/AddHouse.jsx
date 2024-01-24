@@ -110,44 +110,44 @@ const AddHouse = () => {
             <div className="bg-yellow-400 py-2 rounded-md">
                <h2 className="text-3xl font-bold text-blue-800 text-center">Add Your House</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5 border border-gray-400 rounded-md p-3">
-               <div>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-5 mt-5 border border-gray-400 rounded-md p-3">
+               <div className="col-span-2 md:col-span-1">
                   <label htmlFor="">House Name</label>
                   <input onChange={(e) => setHouseName(e.target.value)} type="text" name="" id="" placeholder="House Name" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">House Address</label>
                   <input onChange={(e) => setAddress(e.target.value)} type="text" name="" id="" placeholder="House Address" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">City</label>
                   <input onChange={(e) => setCity(e.target.value)} type="text" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">Bedrooms</label>
                   <input onChange={(e) => setBedroom(e.target.value)} type="number" name="" id="" placeholder="Bedrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">Bathrooms</label>
                   <input onChange={(e) => setBathroom(e.target.value)} type="number" name="" id="" placeholder="Bathrooms" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">Room Size (Squire Feet)</label>
                   <input onChange={(e) => setRoomSize(e.target.value)} type="number" name="" id="" placeholder="Room Size" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">Avaiabillity Date</label>
                   <input onChange={(e) => setAvailability(e.target.value)} type="date" name="" id="" placeholder="City" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-1">
                   <label htmlFor="">Rent Per Month</label>
                   <input onChange={(e) => setRent(e.target.value)} type="number" name="" id="" placeholder="Rent Per Month" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
-                  <label htmlFor="">Phone Number (give valid bd Number)</label>
+               <div className="col-span-1">
+                  <label htmlFor="">Phone Number (+880)</label>
                   <input onChange={(e) => setNumber(e.target.value)} defaultValue={+880178961606} type="number" name="" id="" placeholder="Phone Number" className="w-full p-3 border rounded-md border-gray-400 outline-none" />
                </div>
-               <div>
+               <div className="col-span-2 md:col-span-1">
                   <label htmlFor="">Picture</label>
                   <input onChange={(e) => postImage(e.target.files[0])} accept="image/*" type="file" name="" id="" placeholder="Picture" className="w-full p-[9px] border rounded-md border-gray-400 outline-none" />
                </div>

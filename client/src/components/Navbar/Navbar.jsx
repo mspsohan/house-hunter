@@ -41,9 +41,9 @@ const Navbar = () => {
             <div className="container mx-auto" x-data="{open:false}">
                <nav className="flex justify-between ">
                   <div className="flex items-center justify-between w-full px-4 py-2 lg:px-2 ">
-                     <a href="" className="text-2xl font-bold text-gray-700 dark:text-gray-400">House <span className="text-yellow-500"> Hunter</span></a>
+                     <a href="#" className="text-2xl font-bold text-gray-700 dark:text-gray-400">House <span className="text-yellow-500"> Hunter</span></a>
                      <div className="flex items-center lg:hidden ">
-                        <a href="" className="flex items-center mr-4 dark:text-gray-400">
+                        <a href="#" className="flex items-center mr-4 dark:text-gray-400">
                            <FaShoppingCart className="text-2xl text-gray-700" />
                         </a>
                         <button onClick={() => setShowMenu(true)} className="flex items-center px-3 py-2 text-blue-600 border border-blue-200 rounded dark:text-gray-400 hover:text-blue-800 hover:border-blue-300 lg:hidden">
@@ -80,7 +80,7 @@ const Navbar = () => {
                         </div>
                      </div> */}
                      <div className="items-center justify-end hidden lg:flex dark:text-gray-400">
-                        <a href="" className="flex items-center dark:text-gray-400 hover:bg-gray-400 p-3 rounded-full">
+                        <a href="#" className="flex items-center dark:text-gray-400 hover:bg-gray-400 p-3 rounded-full">
                            <FaShoppingCart className="text-2xl text-gray-700" />
                         </a>
 
@@ -105,7 +105,7 @@ const Navbar = () => {
                            <div id='dropdown_profile' className={`absolute right-0 w-48 mt-4 origin-top-right bg-white rounded shadow dark:bg-gray-700 ${profile ? '' : 'hidden'
                               }`}>
                               <div className='py-1'>
-                                 <a href=''
+                                 <a href='#'
                                     className='flex items-center px-4 py-2 text-base text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 hover:bg-gray-100'>
                                     <IoSettingsOutline className='mr-2 text-xl' />
                                     Account
